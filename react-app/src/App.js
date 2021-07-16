@@ -150,26 +150,32 @@ function App() {
           Fair Trade Coffee <br /> Richard Mands <br />
           Udacity Blockchain Nanodegree
         </p>
+        <p className="explanation">
+          See the code on{" "}
+          <a
+            href="https://github.com/richardmands/supplyChain"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+          </a>
+        </p>
         {contractURI ? (
-          <>
-            <p>
-              Deployed on Rinkeby Test Network <br />
-              <a
-                href={`https://rinkeby.etherscan.io/address/${contractURI}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {contractURI}
-              </a>
-            </p>
-          </>
+          <p className="explanation">
+            Deployed on Rinkeby Test Network <br />
+            <a
+              href={`https://rinkeby.etherscan.io/address/${contractURI}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {contractURI}
+            </a>
+          </p>
         ) : (
-          <>
-            <p>
-              Not connected to smart contract. Make sure you have MetaMask
-              installed and try reloading.
-            </p>
-          </>
+          <p className="explanation">
+            Not connected to smart contract. Make sure you have MetaMask
+            installed and you're on the Rinkeby Test Network.
+          </p>
         )}
         <p className="explanation">
           This project allows different user roles to create and move items
