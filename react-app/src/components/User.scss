@@ -1,0 +1,30 @@
+.User {
+
+    .rolesContainer {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .userRole {
+        width: 200px;
+        display: flex;
+        background-color: red;
+        color: white;
+        transition: all 0.3s linear;
+        border-radius: 5px;
+
+        &.active {
+            background-color: green;
+        }
+
+        &:focus {
+            opacity: 0.8;
+        }
+    }
+
+    .userRoleText {
+        margin: auto;
+        padding: 20px;
+    }
+}

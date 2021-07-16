@@ -1,0 +1,23 @@
+.CropDetailsModal {
+    .details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+
+    .label {
+        width: auto;
+    }
+
+    .data {
+        width: auto;
+        margin-left: 10px;
+    }
+
+}

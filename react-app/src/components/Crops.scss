@@ -1,0 +1,88 @@
+.Crops {
+    .cropsContainer {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: flex-start;
+        width: 100%;
+        padding-top: 20px;
+    }
+}
+
+.Crop {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    color: white;
+    transition: all 0.3s ease-in-out;
+    
+    .harvested, .processed, .packed, .forsale, .sold, .shipped, .received, .purchased {
+        min-height: 300px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        padding: 15px;
+    }
+
+    .harvested {
+        background: maroon;
+    }
+
+    .processed {
+        background: brown;
+    }
+
+    .packed {
+        background: sienna;
+    }
+
+    .forsale {
+        background: saddlebrown;
+    }
+
+    .sold {
+        background: olive;
+    }
+
+    .shipped {
+        background: chocolate;
+    }
+    
+    .received {
+        background: peru;
+    }
+    
+    .purchased {
+        background: darkgoldenrod;
+    }
+
+    
+    .info {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .label {
+        margin: auto 0;
+        font-size: 12px;
+    }
+    
+    .data {
+        margin: auto 0 auto 10px;
+        font-size: 16px;
+    }
+
+    .form {
+        margin: 0;
+        .input {
+            margin-bottom: 10px;
+        }
+    }
+
+    .submitButton {
+        margin-top: 0;
+    }
+}
