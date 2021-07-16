@@ -10,6 +10,7 @@
     width: 100%;
     background-color: rgba(0, 0, 0, 0.248);
     display: flex;
+    z-index: 999;
 
     svg {
       transform: scale(5);

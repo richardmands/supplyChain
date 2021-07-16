@@ -163,7 +163,14 @@ function App() {
               </a>
             </p>
           </>
-        ) : null}
+        ) : (
+          <>
+            <p>
+              Not connected to smart contract. Make sure you have MetaMask
+              installed and try reloading.
+            </p>
+          </>
+        )}
         <p className="explanation">
           This project allows different user roles to create and move items
           through a supply chain. It includes a payment step that allows
@@ -200,7 +207,7 @@ function App() {
           <User
             userId={account}
             isFarmer={isFarmer}
-            setFarmer={() =>
+            setFarmer={() => {
               setFarmer({
                 instance: contractInstance,
                 id: account,
@@ -208,57 +215,72 @@ function App() {
                 onSuccess: () => {
                   setIsFarmer(!isFarmer)
                   setShouldUpdate(true)
+                  setLoading(false)
                   makeToast("You've updated your status!", true)
                 },
-                onFailure: () =>
-                  makeToast("Something went wrong updating your status..."),
+                onFailure: () => {
+                  makeToast("Something went wrong updating your status...")
+                  setLoading(false)
+                },
               })
-            }
+            }}
             isDistributor={isDistributor}
-            setDistributor={() =>
+            setDistributor={() => {
+              setLoading(true)
               setDistributor({
                 instance: contractInstance,
                 id: account,
                 isDistributor,
                 onSuccess: () => {
+                  setLoading(false)
                   setIsDistributor(!isDistributor)
                   setShouldUpdate(true)
                   makeToast("You've updated your status!", true)
                 },
-                onFailure: () =>
-                  makeToast("Something went wrong updating your status..."),
+                onFailure: () => {
+                  setLoading(false)
+                  makeToast("Something went wrong updating your status...")
+                },
               })
-            }
+            }}
             isRetailer={isRetailer}
-            setRetailer={() =>
+            setRetailer={() => {
+              setLoading(true)
               setRetailer({
                 instance: contractInstance,
                 id: account,
                 isRetailer,
                 onSuccess: () => {
+                  setLoading(false)
                   setIsRetailer(!isRetailer)
                   setShouldUpdate(true)
                   makeToast("You've updated your status!", true)
                 },
-                onFailure: () =>
-                  makeToast("Something went wrong updating your status..."),
+                onFailure: () => {
+                  setLoading(false)
+                  makeToast("Something went wrong updating your status...")
+                },
               })
-            }
+            }}
             isConsumer={isConsumer}
-            setConsumer={() =>
+            setConsumer={() => {
+              setLoading(true)
               setConsumer({
                 instance: contractInstance,
                 id: account,
                 isConsumer,
                 onSuccess: () => {
+                  setLoading(false)
                   setIsConsumer(!isConsumer)
                   setShouldUpdate(true)
                   makeToast("You've updated your status!", true)
                 },
-                onFailure: () =>
-                  makeToast("Something went wrong updating your status..."),
+                onFailure: () => {
+                  setLoading(false)
+                  makeToast("Something went wrong updating your status...")
+                },
               })
-            }
+            }}
           />
 
           <hr className="section endSection" />
@@ -285,6 +307,7 @@ function App() {
                   setProductNotes={setProductNotes}
                   onSubmit={async (event) => {
                     event.preventDefault()
+                    setLoading(true)
                     harvestCrop({
                       instance: contractInstance,
                       id: account,
@@ -295,14 +318,17 @@ function App() {
                       farmLongitude,
                       productNotes,
                       onSuccess: () => {
+                        setLoading(false)
                         makeToast("You've harvested your crop!", true)
                         resetHarvestForm()
                         setShouldUpdate(true)
                       },
-                      onFailure: () =>
+                      onFailure: () => {
+                        setLoading(false)
                         makeToast(
                           "Something went wrong harvesting your crop..."
-                        ),
+                        )
+                      },
                     })
                   }}
                 />
@@ -319,6 +345,7 @@ function App() {
             crops={crops}
             isFarmer={isFarmer}
             processCrop={(sku) => {
+              setLoading(true)
               processCrop({
                 instance: contractInstance,
                 id: account,
@@ -327,29 +354,37 @@ function App() {
                 isFarmer,
                 sku,
                 onSuccess: () => {
+                  setLoading(false)
                   makeToast("You've processed your crop!", true)
                   setShouldUpdate(true)
                 },
-                onFailure: () =>
-                  makeToast("Something went wrong processing your crop..."),
+                onFailure: () => {
+                  setLoading(false)
+                  makeToast("Something went wrong processing your crop...")
+                },
               })
             }}
             packCrop={(sku) => {
+              setLoading(true)
               packCrop({
                 instance: contractInstance,
                 id: account,
                 isFarmer,
                 sku,
                 onSuccess: () => {
+                  setLoading(false)
                   makeToast("You've processed your crop!", true)
                   setShouldUpdate(true)
                 },
-                onFailure: () =>
-                  makeToast("Something went wrong processing your crop..."),
+                onFailure: () => {
+                  setLoading(false)
+                  makeToast("Something went wrong processing your crop...")
+                },
               })
             }}
             fromWei={web3.utils.fromWei}
             sellCrop={(sku, productPrice) => {
+              setLoading(true)
               sellCrop({
                 instance: contractInstance,
                 id: account,
@@ -357,17 +392,21 @@ function App() {
                 sku,
                 productPrice: web3.utils.toWei(productPrice, "ether"),
                 onSuccess: () => {
+                  setLoading(false)
                   makeToast("You've put your crop up for sale!", true)
                   setShouldUpdate(true)
                 },
-                onFailure: () =>
+                onFailure: () => {
+                  setLoading(false)
                   makeToast(
                     "Something went wrong putting your crop up for sale..."
-                  ),
+                  )
+                },
               })
             }}
             isDistributor={isDistributor}
             buyCrop={(sku, price) => {
+              setLoading(true)
               buyCrop({
                 instance: contractInstance,
                 id: account,
@@ -375,14 +414,18 @@ function App() {
                 sku,
                 productPrice: price,
                 onSuccess: () => {
+                  setLoading(false)
                   makeToast("You've bought some coffee!", true)
                   setShouldUpdate(true)
                 },
-                onFailure: () =>
-                  makeToast("Something went wrong buying this crop..."),
+                onFailure: () => {
+                  setLoading(false)
+                  makeToast("Something went wrong buying this crop...")
+                },
               })
             }}
             markCropAsShipped={(sku, retailerID) => {
+              setLoading(true)
               markCropAsShipped({
                 instance: contractInstance,
                 id: account,
@@ -390,43 +433,54 @@ function App() {
                 sku,
                 retailerID,
                 onSuccess: () => {
+                  setLoading(false)
                   makeToast("You've shipped your crop!", true)
                   setShouldUpdate(true)
                 },
-                onFailure: () =>
-                  makeToast("Something went wrong shipping your crop..."),
+                onFailure: () => {
+                  setLoading(false)
+                  makeToast("Something went wrong shipping your crop...")
+                },
               })
             }}
             isRetailer={isRetailer}
             receiveCrop={(sku) => {
+              setLoading(true)
               receiveCrop({
                 instance: contractInstance,
                 id: account,
                 isRetailer,
                 sku,
                 onSuccess: () => {
+                  setLoading(false)
                   makeToast("You've received your crop!", true)
                   setShouldUpdate(true)
                 },
-                onFailure: () =>
+                onFailure: () => {
+                  setLoading(false)
                   makeToast(
                     "Something went wrong marking your crop as received..."
-                  ),
+                  )
+                },
               })
             }}
             isConsumer={isConsumer}
             purchaseCrop={(sku) => {
+              setLoading(true)
               purchaseCrop({
                 instance: contractInstance,
                 id: account,
                 isConsumer,
                 sku,
                 onSuccess: () => {
+                  setLoading(false)
                   makeToast("You've purchased your crop!", true)
                   setShouldUpdate(true)
                 },
-                onFailure: () =>
-                  makeToast("Something went wrong purchasing your crop..."),
+                onFailure: () => {
+                  setLoading(false)
+                  makeToast("Something went wrong purchasing your crop...")
+                },
               })
             }}
           />
