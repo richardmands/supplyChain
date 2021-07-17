@@ -19,20 +19,20 @@ function Crop({
   const [retailerID, setRetailerID] = useState("")
 
   return (
-    <div
-      className="Crop"
-      role="button"
-      onClick={() => {
-        setCropDetailsModalOpen(true)
-        setSelectedCropSku(crop.sku)
-      }}
-      onKeyPress={() => {
-        setCropDetailsModalOpen(true)
-        setSelectedCropSku(crop.sku)
-      }}
-      tabIndex={0}
-    >
-      <div className={`${status.toLowerCase()}`}>
+    <div className="Crop">
+      <div
+        className={`${status.toLowerCase()}`}
+        role="button"
+        onClick={() => {
+          setCropDetailsModalOpen(true)
+          setSelectedCropSku(crop.sku)
+        }}
+        onKeyPress={() => {
+          setCropDetailsModalOpen(true)
+          setSelectedCropSku(crop.sku)
+        }}
+        tabIndex={0}
+      >
         <div className="info">
           <div className="label">Farm: </div>
           <div className="data">{crop.originFarmName}</div>
