@@ -20,6 +20,7 @@ You can :
 - Options change depending on whether you are the owner of the star that is listed.
 
 ## Running the app
+- Run Ganache CLI or `truffle develop`
 - Pull down the code from GitHub
 ### Contracts
 - Run `truffle compile` and `truffle migrate` commands from the root directory
