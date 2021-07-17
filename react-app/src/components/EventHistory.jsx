@@ -3,7 +3,7 @@ import "./EventHistory.scss"
 
 export default function EventHistory({ eventHistory, contractURI }) {
   const last10 =
-    eventHistory.length <= 10 ? eventHistory : eventHistory.slice(-10).reverse()
+    eventHistory.length <= 10 ? eventHistory : eventHistory.slice(-10)
 
   return (
     <div className="EventHistory section">
@@ -13,7 +13,7 @@ export default function EventHistory({ eventHistory, contractURI }) {
         For whole list, click{" "}
         <a href={`https://rinkeby.etherscan.io/txs?a=${contractURI}`}>here</a>.
       </p>
-      {last10.map((event) => (
+      {[...last10].reverse().map((event) => (
         <div className="event" key={event.transactionHash}>
           <div className="data">
             <span>{`Transaction - Block ${event.blockNumber} `}</span>
