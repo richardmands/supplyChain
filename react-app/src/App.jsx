@@ -9,6 +9,7 @@ import "./App.scss"
 import useWeb3 from "./hooks/useWeb3"
 import useContract from "./hooks/useContract"
 import SupplyChainContract from "./contracts/SupplyChain.json"
+
 import {
   checkIsFarmer,
   setFarmer,
@@ -19,6 +20,7 @@ import {
   checkIsConsumer,
   setConsumer,
 } from "./contractHelpers/roles"
+
 import {
   harvestCrop,
   getCrops,
