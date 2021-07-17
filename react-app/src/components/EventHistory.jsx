@@ -3,9 +3,7 @@ import "./EventHistory.scss"
 
 export default function EventHistory({ eventHistory, contractURI }) {
   const last10 =
-    eventHistory.length <= 10
-      ? eventHistory
-      : eventHistory.reverse().slice(0, 10)
+    eventHistory.length <= 10 ? eventHistory : eventHistory.slice(-10).reverse()
 
   return (
     <div className="EventHistory section">
