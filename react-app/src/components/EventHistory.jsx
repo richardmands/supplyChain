@@ -2,12 +2,10 @@ import React from "react"
 import "./EventHistory.scss"
 
 export default function EventHistory({ eventHistory, contractURI }) {
-  console.log("🚀 ~ eventHistory", eventHistory)
   const last10 =
     eventHistory.length <= 10
       ? eventHistory
       : eventHistory.reverse().slice(0, 10)
-  console.log("🚀 ~ last10", last10)
 
   return (
     <div className="EventHistory section">
