@@ -35,9 +35,11 @@ import {
 import User from "./components/User"
 import Crops from "./components/Crops"
 import Harvest from "./components/Harvest"
+import EventHistory from "./components/EventHistory"
 
 import logo from "./coffee.png"
 import CropDetailsModal from "./components/CropDetailsModal"
+import { getEventHistory } from "./contractHelpers/events"
 
 const makeToast = (text, happy) => {
   const options = {
@@ -61,7 +63,7 @@ function App() {
   const account = (accounts && accounts[0]) || ""
 
   const [shouldUpdate, setShouldUpdate] = useState(true)
-  const [contractInstance, contractURI] = useContract({
+  const [instance, contractURI] = useContract({
     web3,
     smartContract: SupplyChainContract,
     gasPrice,
@@ -73,6 +75,7 @@ function App() {
     onFailure: () => makeToast("Failed to connect to Smart Contract :("),
   })
 
+  const [eventHistory, setEventHistory] = useState([])
   const [isFarmer, setIsFarmer] = useState(false)
   const [isDistributor, setIsDistributor] = useState(false)
   const [isRetailer, setIsRetailer] = useState(false)
@@ -80,25 +83,26 @@ function App() {
   const [skus, setSkus] = useState([])
 
   useEffect(() => {
-    if (contractInstance && shouldUpdate) {
-      checkIsFarmer({ instance: contractInstance, id: account, setIsFarmer })
+    if (instance && shouldUpdate) {
+      getEventHistory({ instance, setEventHistory })
+      checkIsFarmer({ instance, id: account, setIsFarmer })
       checkIsDistributor({
-        instance: contractInstance,
+        instance,
         id: account,
         setIsDistributor,
       })
       checkIsRetailer({
-        instance: contractInstance,
+        instance,
         id: account,
         setIsRetailer,
       })
       checkIsConsumer({
-        instance: contractInstance,
+        instance,
         id: account,
         setIsConsumer,
       })
       getCurrentSku({
-        instance: contractInstance,
+        instance,
         onSuccess: (sku) => {
           if (sku) {
             setSkus([...Array(Number(sku)).keys()].map((num) => num + 1))
@@ -106,7 +110,7 @@ function App() {
         },
       })
     }
-  }, [contractInstance, shouldUpdate])
+  }, [instance, shouldUpdate])
 
   const [crops, setCrops] = useState({})
   useEffect(() => {
@@ -114,13 +118,13 @@ function App() {
       setLoading(true)
       setShouldUpdate(false)
       getCrops({
-        instance: contractInstance,
+        instance,
         skus,
         setCrops,
         onFinish: () => setLoading(false),
       })
     }
-  }, [contractInstance, skus, shouldUpdate])
+  }, [instance, skus, shouldUpdate])
 
   // harvest form data
   const [farmName, setFarmName] = useState("")
@@ -215,7 +219,7 @@ function App() {
             isFarmer={isFarmer}
             setFarmer={() => {
               setFarmer({
-                instance: contractInstance,
+                instance,
                 id: account,
                 isFarmer,
                 onSuccess: () => {
@@ -234,7 +238,7 @@ function App() {
             setDistributor={() => {
               setLoading(true)
               setDistributor({
-                instance: contractInstance,
+                instance,
                 id: account,
                 isDistributor,
                 onSuccess: () => {
@@ -253,7 +257,7 @@ function App() {
             setRetailer={() => {
               setLoading(true)
               setRetailer({
-                instance: contractInstance,
+                instance,
                 id: account,
                 isRetailer,
                 onSuccess: () => {
@@ -272,7 +276,7 @@ function App() {
             setConsumer={() => {
               setLoading(true)
               setConsumer({
-                instance: contractInstance,
+                instance,
                 id: account,
                 isConsumer,
                 onSuccess: () => {
@@ -315,7 +319,7 @@ function App() {
                     event.preventDefault()
                     setLoading(true)
                     harvestCrop({
-                      instance: contractInstance,
+                      instance,
                       id: account,
                       isFarmer,
                       farmName,
@@ -353,7 +357,7 @@ function App() {
             processCrop={(sku) => {
               setLoading(true)
               processCrop({
-                instance: contractInstance,
+                instance,
                 id: account,
                 gasLimit,
                 gasPrice,
@@ -373,7 +377,7 @@ function App() {
             packCrop={(sku) => {
               setLoading(true)
               packCrop({
-                instance: contractInstance,
+                instance,
                 id: account,
                 isFarmer,
                 sku,
@@ -392,7 +396,7 @@ function App() {
             sellCrop={(sku, productPrice) => {
               setLoading(true)
               sellCrop({
-                instance: contractInstance,
+                instance,
                 id: account,
                 isFarmer,
                 sku,
@@ -414,7 +418,7 @@ function App() {
             buyCrop={(sku, price) => {
               setLoading(true)
               buyCrop({
-                instance: contractInstance,
+                instance,
                 id: account,
                 isDistributor,
                 sku,
@@ -433,7 +437,7 @@ function App() {
             markCropAsShipped={(sku, retailerID) => {
               setLoading(true)
               markCropAsShipped({
-                instance: contractInstance,
+                instance,
                 id: account,
                 isDistributor,
                 sku,
@@ -453,7 +457,7 @@ function App() {
             receiveCrop={(sku) => {
               setLoading(true)
               receiveCrop({
-                instance: contractInstance,
+                instance,
                 id: account,
                 isRetailer,
                 sku,
@@ -474,7 +478,7 @@ function App() {
             purchaseCrop={(sku) => {
               setLoading(true)
               purchaseCrop({
-                instance: contractInstance,
+                instance,
                 id: account,
                 isConsumer,
                 sku,
@@ -490,6 +494,8 @@ function App() {
               })
             }}
           />
+          <hr className="section endSection" />
+          <EventHistory eventHistory={eventHistory} contractURI={contractURI} />
           <hr className="section endSection" />
         </>
       ) : null}
