@@ -13,7 +13,7 @@ module.exports = {
   contracts_build_directory: path.join(__dirname, "react-app/src/contracts"),
   networks: {
     development: {
-     host: "172.18.16.1",     // Localhost (default: none)
+     host: "172.26.48.1",     // Localhost (default: none)
      port: 7545,            // Standard Ethereum port (default: none)
      network_id: "*",       // Any network (default: none)
     },

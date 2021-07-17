@@ -15,6 +15,14 @@ You can :
 - Put stars up for sale.
 - Buy stars that are available for sale.
 - Options change depending on whether you are the owner of the star that is listed.
+
+## Tests
+- Mocha for contract tests
+- Errors visible in console logs are confirming failure when account with wrong permissions attempts an action.
+- [See Tests Here](https://github.com/richardmands/supplyChain/blob/master/test/TestSupplychain.js)
+
+![picture alt](./pictures/tests.jpg)
+
 ## UML
 ### Activity Diagram
 ![picture alt](./pictures/activity.jpg)
@@ -32,7 +40,6 @@ You can :
 - Node v14
 
 - Create React App for App Base
-- Mocha for contract tests
 - Local development carried out with Ganache
 
 ## IPFS
