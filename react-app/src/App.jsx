@@ -192,6 +192,17 @@ function App() {
         </p>
       </header>
 
+      <div className="statuses">
+        <div
+          className={`contractStatus ${
+            instance ? "operational" : "notOperational"
+          }`}
+        >
+          Contract:{" "}
+          {`${instance ? "Connected" : "Not logged in to MetaMask on Rinkeby"}`}
+        </div>
+      </div>
+
       {loading ? (
         <div className="LoaderFullScreen">
           <Loader
@@ -205,7 +216,7 @@ function App() {
       ) : null}
 
       {web3 && accounts?.length ? (
-        <>
+        <div className="content">
           {selectedCropSku ? (
             <CropDetailsModal
               isOpen={cropDetailsModalOpen}
@@ -499,7 +510,7 @@ function App() {
           <hr className="section endSection" />
           <EventHistory eventHistory={eventHistory} contractURI={contractURI} />
           <hr className="section endSection" />
-        </>
+        </div>
       ) : null}
     </div>
   )

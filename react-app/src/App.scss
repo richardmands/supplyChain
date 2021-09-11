@@ -32,6 +32,7 @@
   }
 
   .App-header {
+    margin-top: 60px;
     background-color: #282c34;
     display: flex;
     flex-direction: column;
@@ -106,6 +107,35 @@
 
   .buttonText {
     margin: auto;
+    padding: 20px;
+  }
+
+  .statuses {
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+  }
+
+
+  .contractStatus {
+    color: white;
+    font-size: 20px;
+    padding: 15px;
+    transition: all 1s;
+    width: 100%;
+    
+    &.operational {
+      background-color: green;
+    }
+    
+    &.notOperational {
+      background-color: red;
+    }
+  }
+
+  .content {
     padding: 20px;
   }
 }
