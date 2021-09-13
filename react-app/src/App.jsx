@@ -215,7 +215,7 @@ function App() {
         </div>
       ) : null}
 
-      {web3 && accounts?.length ? (
+      {web3 && instance && accounts?.length ? (
         <div className="content">
           {selectedCropSku ? (
             <CropDetailsModal
